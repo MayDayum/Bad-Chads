@@ -19,11 +19,20 @@
             padding: 20px; border-radius: 12px; border: 1px solid #30363d; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
         }
-        .header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #30363d; padding-bottom: 15px; }
+        .header { text-align: center; margin-bottom: 15px; border-bottom: 1px solid #30363d; padding-bottom: 15px; }
         #gmt-clock { font-size: 3em; font-weight: 800; color: white; line-height: 1; }
         .update-tag { font-size: 0.7em; color: #8b949e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; display: block; }
         #local-zone-info { color: var(--green); font-size: 0.85em; margin-top: 8px; font-weight: 500; }
         
+        /* Rank Legend Styling */
+        .rank-legend { 
+            font-size: 0.75em; color: #8b949e; margin: 10px 0; 
+            background: #21262d; padding: 6px 12px; border-radius: 6px; 
+            display: inline-block; border: 1px solid #30363d;
+        }
+        .legend-item { margin: 0 5px; white-space: nowrap; }
+        .legend-tag { color: var(--blue); font-weight: bold; }
+
         .filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .filter-btn { 
             padding: 8px 14px; border: 1px solid #30363d; border-radius: 8px; 
@@ -43,22 +52,16 @@
         .status-pending { color: #8b949e; font-style: italic; opacity: 0.8; font-size: 0.85em; display: block; margin-top: 2px; }
         .status-inactive { color: var(--danger); text-decoration: line-through; opacity: 0.5; }
 
-        /* MOBILE OPTIMIZATIONS */
         @media (max-width: 600px) {
             body { padding: 5px; }
             .container { padding: 12px; border-radius: 8px; }
             #gmt-clock { font-size: 2.2em; }
             h1 { font-size: 1.2em; margin: 10px 0; }
-            
-            /* Tighten up the table rows */
             td { padding: 8px 6px; font-size: 0.85em; }
             th { padding: 8px 6px; font-size: 0.65em; }
-            
-            /* Hide the GMT column on phones to make space for Local Time */
             th:nth-child(2), td:nth-child(2) { display: none; } 
-            
             .filter-btn { padding: 6px 10px; font-size: 0.75em; }
-            .status-pending { font-size: 0.75em; }
+            .rank-legend { font-size: 0.65em; padding: 4px 8px; }
         }
     </style>
 </head>
@@ -69,6 +72,13 @@
         <span class="update-tag">Last Updated: May 6th, 2026</span>
         <div id="gmt-clock">00:00:00 GMT</div>
         <h1>⚔️ Bad Chads - War Room ⚔️</h1>
+        
+        <div class="rank-legend">
+            <span class="legend-item"><span class="legend-tag">BK:</span> Bad King</span> | 
+            <span class="legend-item"><span class="legend-tag">PR:</span> Bad Prince</span> | 
+            <span class="legend-item"><span class="legend-tag">CO:</span> Bad Commander</span>
+        </div>
+
         <div id="local-zone-info">Detecting your timezone...</div>
     </div>
 
