@@ -20,19 +20,32 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
         }
         .header { text-align: center; margin-bottom: 10px; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
-        #gmt-clock { font-size: 2.8em; font-weight: 800; color: white; line-height: 1; }
-        .update-tag { font-size: 0.65em; color: #8b949e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; display: block; }
         
-        .time-settings { margin-top: 10px; font-size: 0.85em; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
-        .local-label { color: var(--green); font-weight: bold; }
-        #local-zone-info { color: var(--text); opacity: 0.9; }
-        .small-toggle { 
-            background: none; border: 1px solid #30363d; color: var(--warning); 
-            font-size: 0.8em; padding: 2px 8px; border-radius: 4px; cursor: pointer;
+        /* Server Clock Styling */
+        .server-time-wrapper { margin-bottom: 10px; }
+        .server-label { color: var(--blue); font-weight: 800; font-size: 0.8em; letter-spacing: 2px; display: block; margin-bottom: 2px; }
+        #gmt-clock { font-size: 2.8em; font-weight: 800; color: white; line-height: 1; }
+        
+        .update-tag { font-size: 0.65em; color: #8b949e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; display: block; }
+        
+        /* Time Settings & Foolproof Toggle */
+        .time-settings { 
+            margin: 15px 0; padding: 12px; background: #0d1117; 
+            border-radius: 8px; border: 1px solid #30363d; 
         }
+        .local-label { color: var(--green); font-weight: bold; font-size: 0.8em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+        #local-clock-display { color: white; font-size: 1.1em; font-weight: bold; margin-bottom: 10px; display: block; }
+        
+        .big-toggle-btn { 
+            background: var(--warning); color: black; border: none; 
+            font-size: 0.75em; padding: 8px 16px; border-radius: 4px; 
+            cursor: pointer; font-weight: 800; text-transform: uppercase;
+            box-shadow: 0 3px 0 #9b6d10; transition: 0.1s;
+        }
+        .big-toggle-btn:active { transform: translateY(2px); box-shadow: none; }
 
         .rank-legend { 
-            font-size: 0.7em; color: #8b949e; margin: 8px 0; 
+            font-size: 0.7em; color: #8b949e; margin-bottom: 15px;
             background: #21262d; padding: 5px 10px; border-radius: 6px; 
             display: inline-block; border: 1px solid #30363d;
         }
@@ -73,10 +86,8 @@
 
         @media (max-width: 600px) {
             #gmt-clock { font-size: 2.2em; }
-            h1 { font-size: 1.1em; }
-            td { padding: 6px 5px; font-size: 0.82em; }
-            .header-label { font-size: 0.65em; }
-            .switch-btn { padding: 5px 8px; font-size: 0.65em; }
+            h1 { font-size: 1.2em; margin-bottom: 15px; }
+            td { padding: 8px 5px; font-size: 0.82em; }
         }
     </style>
 </head>
@@ -84,8 +95,13 @@
 
 <div class="container">
     <div class="header">
-        <span class="update-tag">Updated: May 7th, 2026</span>
-        <div id="gmt-clock">00:00:00 GMT</div>
+        <span class="update-tag">Last Updated: May 7th, 2026</span>
+        
+        <div class="server-time-wrapper">
+            <span class="server-label">CURRENT SERVER TIME</span>
+            <div id="gmt-clock">00:00:00 GMT</div>
+        </div>
+
         <h1>⚔️ Bad Chads - War Room</h1>
         
         <div class="rank-legend">
@@ -93,9 +109,9 @@
         </div>
 
         <div class="time-settings">
-            <span class="local-label">Your Local Time:</span>
-            <span id="local-zone-info">Detecting...</span>
-            <button class="small-toggle" onclick="toggle1224()">Format: 24H</button>
+            <span class="local-label">Your Local Device Time:</span>
+            <span id="local-clock-display">Loading...</span>
+            <button class="big-toggle-btn" onclick="toggle1224()">👆 Tap to Change format (12H / 24H)</button>
         </div>
     </div>
 
@@ -134,11 +150,11 @@
             <tr class="member-row" data-group="2"><td>Ms. zombifyre <span class="rank">(PR)</span></td><td class="time-display" data-start="11" data-end="15"></td></tr>
             <tr class="member-row" data-group="2"><td>SQUALLZK6 <span class="rank">(CO)</span></td><td class="time-display" data-start="11" data-end="15"></td></tr>
 
-            <tr class="member-row" data-group="3" data-duplicate="true"><td>David2804 <span class="rank">(CO)</span><span class="status-pending">(if bridge is open fast, Group 3 otherwise)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
+            <tr class="member-row" data-group="3" data-duplicate="true"><td>David2804 <span class="rank">(CO)</span><span class="status-pending">(Flex Entry)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>Ducage <span class="rank">(BK)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>Gozzaiz <span class="rank">(CO)</span><span class="status-pending">(semi-inactive - Group 3?)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>GreenArcher17 <span class="rank">(PR)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3" data-duplicate="true"><td>HanibalCanibal9 <span class="rank">(PR)</span><span class="status-pending">(first hour, or Group 3)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
+            <tr class="member-row" data-group="3" data-duplicate="true"><td>HanibalCanibal9 <span class="rank">(PR)</span><span class="status-pending">(Flex Entry)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>joscuefer <span class="rank">(CO)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>MayDay</td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>samuelbyrock <span class="rank">(CO)</span><span class="status-pending">(Group 3?)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
@@ -160,10 +176,17 @@
     let use24Hour = true;
     let currentView = 'server';
 
-    function updateClock() {
+    function updateClocks() {
         const now = new Date();
-        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: !use24Hour, timeZone: 'UTC' };
-        document.getElementById('gmt-clock').innerText = now.toLocaleTimeString('en-GB', options).toUpperCase() + ' GMT';
+        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: !use24Hour };
+        
+        // Update GMT/Server Clock
+        document.getElementById('gmt-clock').innerText = now.toLocaleTimeString('en-GB', {...options, timeZone: 'UTC'}).toUpperCase() + ' GMT';
+        
+        // Update Local Clock + Timezone
+        const offset = -now.getTimezoneOffset() / 60;
+        const sign = offset >= 0 ? "+" : "";
+        document.getElementById('local-clock-display').innerText = now.toLocaleTimeString([], options) + ` (GMT${sign}${offset})`;
     }
 
     function setView(view) {
@@ -175,23 +198,18 @@
 
     function toggle1224() {
         use24Hour = !use24Hour;
-        event.target.innerText = use24Hour ? "Format: 24H" : "Format: 12H";
-        updateClock();
+        updateClocks();
         renderTimes();
     }
 
     function renderTimes() {
         const cells = document.querySelectorAll('.time-display');
-        const offset = -new Date().getTimezoneOffset() / 60;
-        const sign = offset >= 0 ? "+" : "";
-        document.getElementById('local-zone-info').innerText = `GMT${sign}${offset}`;
+        const options = { hour: '2-digit', minute: '2-digit', hour12: !use24Hour };
 
         cells.forEach(cell => {
             const start = cell.getAttribute('data-start');
             const end = cell.getAttribute('data-end');
             if (!start) return;
-
-            const options = { hour: '2-digit', minute: '2-digit', hour12: !use24Hour };
 
             if (currentView === 'server') {
                 const sStart = new Date(); sStart.setUTCHours(start, 0, 0, 0);
@@ -222,8 +240,8 @@
         });
     }
 
-    setInterval(updateClock, 1000);
-    updateClock();
+    setInterval(updateClocks, 1000);
+    updateClocks();
     renderTimes();
     filterGroup('all', document.querySelector('.filter-btn'));
 </script>
