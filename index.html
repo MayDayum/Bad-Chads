@@ -23,6 +23,7 @@
         
         h1 { margin-bottom: 15px; font-size: 1.6em; color: white; letter-spacing: 1px; }
         
+        /* Time Hierarchy */
         .server-time-wrapper { margin-bottom: 15px; }
         .server-label { color: var(--blue); font-weight: 800; font-size: 0.7em; letter-spacing: 2px; display: block; margin-bottom: 2px; }
         #gmt-clock { font-size: 2.2em; font-weight: 800; color: white; line-height: 1; }
@@ -36,12 +37,14 @@
             font-size: 0.75em; padding: 3px 10px; border-radius: 4px; cursor: pointer;
         }
 
+        /* Rank Legend Styling (Blue Highlights Restored) */
         .rank-legend-container { text-align: center; margin-bottom: 10px; }
         .rank-legend { 
-            font-size: 0.7em; color: #8b949e; 
-            background: #0d1117; padding: 5px 12px; border-radius: 6px; 
+            font-size: 0.72em; color: #8b949e; 
+            background: #0d1117; padding: 6px 12px; border-radius: 6px; 
             display: inline-block; border: 1px solid #30363d;
         }
+        .legend-tag { color: var(--blue); font-weight: bold; }
 
         .filters { display: flex; gap: 5px; margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
         .filter-btn { 
@@ -87,7 +90,7 @@
 
 <div class="container">
     <div class="header">
-        <h1>⚔️ Bad Chads - War Room</h1>
+        <h1>⚔️ Bad Chads - War Room ⚔️</h1>
         
         <div class="server-time-wrapper">
             <span class="server-label">SERVER TIME</span>
@@ -111,7 +114,7 @@
 
     <div class="rank-legend-container">
         <div class="rank-legend">
-            BK: Bad King | PR: Bad Prince | CO: Bad Commander
+            <span class="legend-tag">BK:</span> Bad King | <span class="legend-tag">PR:</span> Bad Prince | <span class="legend-tag">CO:</span> Bad Commander
         </div>
     </div>
 
@@ -142,11 +145,11 @@
             <tr class="member-row" data-group="2"><td>Ms. zombifyre <span class="rank">(PR)</span></td><td class="time-display" data-start="11" data-end="15"></td></tr>
             <tr class="member-row" data-group="2"><td>SQUALLZK6 <span class="rank">(CO)</span></td><td class="time-display" data-start="11" data-end="15"></td></tr>
 
-            <tr class="member-row" data-group="3" data-duplicate="true"><td>David2804 <span class="rank">(CO)</span><span class="status-pending">(Flex Entry)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
+            <tr class="member-row" data-group="3" data-duplicate="true"><td>David2804 <span class="rank">(CO)</span><span class="status-pending">(if bridge is open fast, Group 3 otherwise)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>Ducage <span class="rank">(BK)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>Gozzaiz <span class="rank">(CO)</span><span class="status-pending">(semi-inactive - Group 3?)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>GreenArcher17 <span class="rank">(PR)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3" data-duplicate="true"><td>HanibalCanibal9 <span class="rank">(PR)</span><span class="status-pending">(Flex Entry)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
+            <tr class="member-row" data-group="3" data-duplicate="true"><td>HanibalCanibal9 <span class="rank">(PR)</span><span class="status-pending">(first hour, or Group 3)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>joscuefer <span class="rank">(CO)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>MayDay</td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>samuelbyrock <span class="rank">(CO)</span><span class="status-pending">(Group 3?)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
