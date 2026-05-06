@@ -12,42 +12,53 @@
         }
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
-            background: var(--primary); color: var(--text); margin: 0; padding: 20px; 
+            background: var(--primary); color: var(--text); margin: 0; padding: 10px; 
         }
         .container { 
             max-width: 1000px; margin: auto; background: #161b22; 
-            padding: 25px; border-radius: 12px; border: 1px solid #30363d; 
+            padding: 20px; border-radius: 12px; border: 1px solid #30363d; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
         }
-        .header { text-align: center; margin-bottom: 30px; border-bottom: 1px solid #30363d; padding-bottom: 20px; }
+        .header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #30363d; padding-bottom: 15px; }
         #gmt-clock { font-size: 3em; font-weight: 800; color: white; line-height: 1; }
-        .update-tag { font-size: 0.8em; color: #8b949e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block; }
-        #local-zone-info { color: var(--green); font-size: 0.9em; margin-top: 10px; font-weight: 500; }
+        .update-tag { font-size: 0.7em; color: #8b949e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; display: block; }
+        #local-zone-info { color: var(--green); font-size: 0.85em; margin-top: 8px; font-weight: 500; }
         
-        .filters { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; justify-content: center; }
+        .filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .filter-btn { 
-            padding: 10px 18px; border: 1px solid #30363d; border-radius: 8px; 
-            cursor: pointer; background: var(--accent); color: white; font-weight: 600; transition: 0.2s; 
+            padding: 8px 14px; border: 1px solid #30363d; border-radius: 8px; 
+            cursor: pointer; background: var(--accent); color: white; font-weight: 600; transition: 0.2s; font-size: 0.85em;
         }
         .filter-btn:hover { background: #30363d; border-color: #8b949e; }
         .filter-btn.active { background: #1f6feb; border-color: #388bfd; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { background: #0d1117; color: #8b949e; text-align: left; padding: 15px; font-size: 0.85em; text-transform: uppercase; }
-        td { padding: 15px; border-bottom: 1px solid #21262d; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        th { background: #0d1117; color: #8b949e; text-align: left; padding: 12px; font-size: 0.75em; text-transform: uppercase; }
+        td { padding: 12px; border-bottom: 1px solid #21262d; font-size: 0.95em; }
         
-        .name-cell { font-weight: 600; color: white; }
-        .rank { color: var(--blue); font-size: 0.8em; margin-left: 5px; }
+        .rank { color: var(--blue); font-size: 0.75em; margin-left: 3px; font-weight: bold; }
         .gmt-time { color: var(--blue); font-weight: 500; }
         .local-time { color: var(--green); font-weight: bold; }
-        .flex-tag { font-size: 0.7em; background: #d2992222; color: var(--warning); border: 1px solid var(--warning); padding: 2px 8px; border-radius: 12px; margin-left: 10px; }
         
-        .status-pending { color: #8b949e; font-style: italic; opacity: 0.8; }
+        .status-pending { color: #8b949e; font-style: italic; opacity: 0.8; font-size: 0.85em; display: block; margin-top: 2px; }
         .status-inactive { color: var(--danger); text-decoration: line-through; opacity: 0.5; }
 
+        /* MOBILE OPTIMIZATIONS */
         @media (max-width: 600px) {
-            th:nth-child(2), td:nth-child(2) { display: none; } /* Hide GMT on small mobile screens to save space */
-            #gmt-clock { font-size: 2em; }
+            body { padding: 5px; }
+            .container { padding: 12px; border-radius: 8px; }
+            #gmt-clock { font-size: 2.2em; }
+            h1 { font-size: 1.2em; margin: 10px 0; }
+            
+            /* Tighten up the table rows */
+            td { padding: 8px 6px; font-size: 0.85em; }
+            th { padding: 8px 6px; font-size: 0.65em; }
+            
+            /* Hide the GMT column on phones to make space for Local Time */
+            th:nth-child(2), td:nth-child(2) { display: none; } 
+            
+            .filter-btn { padding: 6px 10px; font-size: 0.75em; }
+            .status-pending { font-size: 0.75em; }
         }
     </style>
 </head>
@@ -63,10 +74,10 @@
 
     <div class="filters">
         <button class="filter-btn active" onclick="filterGroup('all', this)">All</button>
-        <button class="filter-btn" onclick="filterGroup('1', this)">Slot 1 (07-11 GMT)</button>
-        <button class="filter-btn" onclick="filterGroup('2', this)">Slot 2 (11-15 GMT)</button>
-        <button class="filter-btn" onclick="filterGroup('3', this)">Slot 3 (15-20 GMT)</button>
-        <button class="filter-btn" onclick="filterGroup('pending', this)">Pending/Inactive</button>
+        <button class="filter-btn" onclick="filterGroup('1', this)">Slot 1</button>
+        <button class="filter-btn" onclick="filterGroup('2', this)">Slot 2</button>
+        <button class="filter-btn" onclick="filterGroup('3', this)">Slot 3</button>
+        <button class="filter-btn" onclick="filterGroup('pending', this)">Pending</button>
     </div>
 
     <table>
@@ -79,10 +90,10 @@
         </thead>
         <tbody id="rosterBody">
             <tr class="member-row" data-group="1"><td>AnimaExodus <span class="rank">(PR)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>David2804 <span class="rank">(CO)</span> <span class="flex-tag">FLEX</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
+            <tr class="member-row" data-group="1"><td>David2804 <span class="rank">(CO)</span> <span class="status-pending">(if bridge is open fast, Slot 3 otherwise)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
             <tr class="member-row" data-group="1"><td>Deepsea <span class="rank">(CO)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
             <tr class="member-row" data-group="1"><td>FreestyleBlade <span class="rank">(CO)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>HanibalCanibal9 <span class="rank">(PR)</span> <span class="flex-tag">FLEX</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
+            <tr class="member-row" data-group="1"><td>HanibalCanibal9 <span class="rank">(PR)</span> <span class="status-pending">(first hour, or Slot 3)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
             <tr class="member-row" data-group="1"><td>macpac3000 <span class="rank">(CO)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
             <tr class="member-row" data-group="1"><td>Montserrat <span class="rank">(CO)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
             <tr class="member-row" data-group="1"><td>todotom <span class="rank">(PR)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
@@ -95,10 +106,10 @@
             <tr class="member-row" data-group="2"><td>Ms. zombifyre <span class="rank">(PR)</span></td><td class="gmt-time">11:00 - 15:00</td><td class="local-time" data-start="11" data-end="15"></td></tr>
             <tr class="member-row" data-group="2"><td>SQUALLZK6 <span class="rank">(CO)</span></td><td class="gmt-time">11:00 - 15:00</td><td class="local-time" data-start="11" data-end="15"></td></tr>
 
-            <tr class="member-row" data-group="3"><td>David2804 <span class="rank">(CO)</span> <span class="flex-tag">FLEX</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
+            <tr class="member-row" data-group="3"><td>David2804 <span class="rank">(CO)</span> <span class="status-pending">(if bridge is open fast, Slot 3 otherwise)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>Ducage <span class="rank">(BK)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>GreenArcher17 <span class="rank">(PR)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3"><td>HanibalCanibal9 <span class="rank">(PR)</span> <span class="flex-tag">FLEX</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
+            <tr class="member-row" data-group="3"><td>HanibalCanibal9 <span class="rank">(PR)</span> <span class="status-pending">(first hour, or Slot 3)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>joscuefer <span class="rank">(CO)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>MayDay</td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>simasp <span class="rank">(CO)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
@@ -127,7 +138,7 @@
         const rows = document.querySelectorAll('.local-time');
         const offset = -new Date().getTimezoneOffset() / 60;
         const sign = offset >= 0 ? "+" : "";
-        document.getElementById('local-zone-info').innerText = `Displaying Local Times in: GMT${sign}${offset}`;
+        document.getElementById('local-zone-info').innerText = `Your Local Zone: GMT${sign}${offset}`;
 
         rows.forEach(cell => {
             const startHour = cell.getAttribute('data-start');
