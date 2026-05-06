@@ -23,15 +23,16 @@
         #gmt-clock { font-size: 2.8em; font-weight: 800; color: white; line-height: 1; }
         .update-tag { font-size: 0.65em; color: #8b949e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; display: block; }
         
-        .time-settings { margin-top: 10px; font-size: 0.85em; }
-        #local-zone-info { color: var(--green); margin-bottom: 5px; font-weight: 500; }
+        .time-settings { margin-top: 10px; font-size: 0.85em; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .local-label { color: var(--green); font-weight: bold; }
+        #local-zone-info { color: var(--text); opacity: 0.9; }
         .small-toggle { 
             background: none; border: 1px solid #30363d; color: var(--warning); 
-            font-size: 0.8em; padding: 3px 8px; border-radius: 4px; cursor: pointer;
+            font-size: 0.8em; padding: 2px 8px; border-radius: 4px; cursor: pointer;
         }
 
         .rank-legend { 
-            font-size: 0.7em; color: #8b949e; margin: 10px 0; 
+            font-size: 0.7em; color: #8b949e; margin: 8px 0; 
             background: #21262d; padding: 5px 10px; border-radius: 6px; 
             display: inline-block; border: 1px solid #30363d;
         }
@@ -44,30 +45,38 @@
         }
         .filter-btn.active { background: #1f6feb; border-color: #388bfd; }
         
-        .view-switcher { margin-bottom: 15px; text-align: center; }
-        .view-btn { 
-            width: 140px; padding: 10px; border: 2px solid #30363d; 
-            background: #0d1117; color: var(--text); font-weight: bold; cursor: pointer;
+        .table-header-row {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #0d1117; padding: 10px; border-radius: 8px 8px 0 0;
+            border: 1px solid #30363d; border-bottom: none;
         }
-        .view-btn.active { border-color: var(--blue); color: var(--blue); background: #1f6feb11; }
-        .view-btn.local-active.active { border-color: var(--green); color: var(--green); background: #7ee78711; }
+        .header-label { font-size: 0.75em; color: #8b949e; text-transform: uppercase; font-weight: bold; }
 
-        table { width: 100%; border-collapse: collapse; }
-        th { background: #0d1117; color: #8b949e; text-align: left; padding: 10px; font-size: 0.7em; text-transform: uppercase; }
-        td { padding: 10px; border-bottom: 1px solid #21262d; font-size: 0.9em; }
+        .mini-switcher { display: flex; gap: 0; border: 1px solid #30363d; border-radius: 6px; overflow: hidden; }
+        .switch-btn { 
+            padding: 6px 10px; font-size: 0.7em; border: none; background: #161b22; 
+            color: #8b949e; cursor: pointer; font-weight: bold;
+        }
+        .switch-btn.active-server { background: #1f6feb; color: white; }
+        .switch-btn.active-local { background: #238636; color: white; }
+
+        table { width: 100%; border-collapse: collapse; border: 1px solid #30363d; }
+        td { padding: 8px 10px; border-bottom: 1px solid #21262d; font-size: 0.9em; }
         
         .rank { color: var(--blue); font-size: 0.75em; font-weight: bold; }
-        .time-display { font-weight: bold; white-space: nowrap; }
+        .time-display { font-weight: bold; white-space: nowrap; text-align: right; width: 1%; }
         .time-server { color: var(--blue); }
         .time-local { color: var(--green); }
         
-        .status-pending { color: #8b949e; font-style: italic; opacity: 0.8; font-size: 0.8em; display: block; }
+        .status-pending { color: #8b949e; font-style: italic; opacity: 0.8; font-size: 0.78em; display: block; }
         .status-inactive { color: var(--danger); text-decoration: line-through; opacity: 0.5; }
 
         @media (max-width: 600px) {
             #gmt-clock { font-size: 2.2em; }
             h1 { font-size: 1.1em; }
-            td, th { padding: 8px 5px; font-size: 0.85em; }
+            td { padding: 6px 5px; font-size: 0.82em; }
+            .header-label { font-size: 0.65em; }
+            .switch-btn { padding: 5px 8px; font-size: 0.65em; }
         }
     </style>
 </head>
@@ -84,7 +93,8 @@
         </div>
 
         <div class="time-settings">
-            <div id="local-zone-info">Timezone detected...</div>
+            <span class="local-label">Your Local Time:</span>
+            <span id="local-zone-info">Detecting...</span>
             <button class="small-toggle" onclick="toggle1224()">Format: 24H</button>
         </div>
     </div>
@@ -97,24 +107,21 @@
         <button class="filter-btn" onclick="filterGroup('pending', this)">Pending</button>
     </div>
 
-    <div class="view-switcher">
-        <button id="btn-server" class="view-btn active" onclick="setView('server')">SERVER TIME</button>
-        <button id="btn-local" class="view-btn" onclick="setView('local')">LOCAL TIME</button>
+    <div class="table-header-row">
+        <span class="header-label">Member</span>
+        <div class="mini-switcher">
+            <button id="s-server" class="switch-btn active-server" onclick="setView('server')">SERVER</button>
+            <button id="s-local" class="switch-btn" onclick="setView('local')">LOCAL</button>
+        </div>
     </div>
 
     <table>
-        <thead>
-            <tr>
-                <th>Member</th>
-                <th id="time-header">Server Time (GMT)</th>
-            </tr>
-        </thead>
         <tbody id="rosterBody">
             <tr class="member-row" data-group="1"><td>AnimaExodus <span class="rank">(PR)</span></td><td class="time-display" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>David2804 <span class="rank">(CO)</span><span class="status-pending">(Group 1 Bridge / Group 3 Flex)</span></td><td class="time-display" data-start="7" data-end="11"></td></tr>
+            <tr class="member-row" data-group="1"><td>David2804 <span class="rank">(CO)</span><span class="status-pending">(if bridge is open fast, Group 3 otherwise)</span></td><td class="time-display" data-start="7" data-end="11"></td></tr>
             <tr class="member-row" data-group="1"><td>Deepsea <span class="rank">(CO)</span></td><td class="time-display" data-start="7" data-end="11"></td></tr>
             <tr class="member-row" data-group="1"><td>FreestyleBlade <span class="rank">(CO)</span></td><td class="time-display" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>HanibalCanibal9 <span class="rank">(PR)</span><span class="status-pending">(Group 1 Early / Group 3 Flex)</span></td><td class="time-display" data-start="7" data-end="11"></td></tr>
+            <tr class="member-row" data-group="1"><td>HanibalCanibal9 <span class="rank">(PR)</span><span class="status-pending">(first hour, or Group 3)</span></td><td class="time-display" data-start="7" data-end="11"></td></tr>
             <tr class="member-row" data-group="1"><td>macpac3000 <span class="rank">(CO)</span></td><td class="time-display" data-start="7" data-end="11"></td></tr>
             <tr class="member-row" data-group="1"><td>Montserrat <span class="rank">(CO)</span></td><td class="time-display" data-start="7" data-end="11"></td></tr>
             <tr class="member-row" data-group="1"><td>todotom <span class="rank">(PR)</span></td><td class="time-display" data-start="7" data-end="11"></td></tr>
@@ -127,11 +134,11 @@
             <tr class="member-row" data-group="2"><td>Ms. zombifyre <span class="rank">(PR)</span></td><td class="time-display" data-start="11" data-end="15"></td></tr>
             <tr class="member-row" data-group="2"><td>SQUALLZK6 <span class="rank">(CO)</span></td><td class="time-display" data-start="11" data-end="15"></td></tr>
 
-            <tr class="member-row" data-group="3" data-duplicate="true"><td>David2804 <span class="rank">(CO)</span><span class="status-pending">(Flex Entry)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
+            <tr class="member-row" data-group="3" data-duplicate="true"><td>David2804 <span class="rank">(CO)</span><span class="status-pending">(if bridge is open fast, Group 3 otherwise)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>Ducage <span class="rank">(BK)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3"><td>Gozzaiz <span class="rank">(CO)</span><span class="status-pending">(Semi-inactive - Group 3?)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
+            <tr class="member-row" data-group="3"><td>Gozzaiz <span class="rank">(CO)</span><span class="status-pending">(semi-inactive - Group 3?)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>GreenArcher17 <span class="rank">(PR)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3" data-duplicate="true"><td>HanibalCanibal9 <span class="rank">(PR)</span><span class="status-pending">(Flex Entry)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
+            <tr class="member-row" data-group="3" data-duplicate="true"><td>HanibalCanibal9 <span class="rank">(PR)</span><span class="status-pending">(first hour, or Group 3)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>joscuefer <span class="rank">(CO)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>MayDay</td><td class="time-display" data-start="15" data-end="20"></td></tr>
             <tr class="member-row" data-group="3"><td>samuelbyrock <span class="rank">(CO)</span><span class="status-pending">(Group 3?)</span></td><td class="time-display" data-start="15" data-end="20"></td></tr>
@@ -161,10 +168,8 @@
 
     function setView(view) {
         currentView = view;
-        document.getElementById('btn-server').classList.toggle('active', view === 'server');
-        document.getElementById('btn-local').classList.toggle('active', view === 'local');
-        document.getElementById('btn-local').classList.toggle('local-active', view === 'local');
-        document.getElementById('time-header').innerText = view === 'server' ? 'Server Time (GMT)' : 'Your Local Time';
+        document.getElementById('s-server').classList.toggle('active-server', view === 'server');
+        document.getElementById('s-local').classList.toggle('active-local', view === 'local');
         renderTimes();
     }
 
@@ -177,21 +182,27 @@
 
     function renderTimes() {
         const cells = document.querySelectorAll('.time-display');
+        const offset = -new Date().getTimezoneOffset() / 60;
+        const sign = offset >= 0 ? "+" : "";
+        document.getElementById('local-zone-info').innerText = `GMT${sign}${offset}`;
+
         cells.forEach(cell => {
             const start = cell.getAttribute('data-start');
             const end = cell.getAttribute('data-end');
             if (!start) return;
+
             const options = { hour: '2-digit', minute: '2-digit', hour12: !use24Hour };
+
             if (currentView === 'server') {
                 const sStart = new Date(); sStart.setUTCHours(start, 0, 0, 0);
                 const sEnd = new Date(); sEnd.setUTCHours(end, 0, 0, 0);
                 cell.className = "time-display time-server";
-                cell.innerText = `${sStart.toLocaleTimeString('en-GB', {...options, timeZone: 'UTC'})} - ${sEnd.toLocaleTimeString('en-GB', {...options, timeZone: 'UTC'})}`;
+                cell.innerText = `${sStart.toLocaleTimeString('en-GB', {...options, timeZone: 'UTC'})}-${sEnd.toLocaleTimeString('en-GB', {...options, timeZone: 'UTC'})}`;
             } else {
                 const lStart = new Date(); lStart.setUTCHours(start, 0, 0, 0);
                 const lEnd = new Date(); lEnd.setUTCHours(end, 0, 0, 0);
                 cell.className = "time-display time-local";
-                cell.innerText = `${lStart.toLocaleTimeString([], options)} - ${lEnd.toLocaleTimeString([], options)}`;
+                cell.innerText = `${lStart.toLocaleTimeString([], options)}-${lEnd.toLocaleTimeString([], options)}`;
             }
         });
     }
@@ -203,12 +214,9 @@
         rows.forEach(row => {
             const isDup = row.getAttribute('data-duplicate') === 'true';
             const rowGroup = row.getAttribute('data-group');
-            
             if (group === 'all') {
-                // Hide duplicates in 'All' view to keep headcount at 30
                 row.style.display = isDup ? 'none' : '';
             } else {
-                // Show matching group even if it is a duplicate row
                 row.style.display = (rowGroup === group) ? '' : 'none';
             }
         });
@@ -217,8 +225,8 @@
     setInterval(updateClock, 1000);
     updateClock();
     renderTimes();
+    filterGroup('all', document.querySelector('.filter-btn'));
 </script>
 
 </body>
 </html>
- 
