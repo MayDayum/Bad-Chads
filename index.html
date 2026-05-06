@@ -42,25 +42,27 @@
 
         table { width: 100%; border-collapse: collapse; margin-top: 5px; }
         th { background: #0d1117; color: #8b949e; text-align: left; padding: 12px; font-size: 0.75em; text-transform: uppercase; }
-        td { padding: 12px; border-bottom: 1px solid #21262d; font-size: 0.95em; }
+        td { padding: 8px 12px; border-bottom: 1px solid #21262d; font-size: 0.95em; line-height: 1.3; }
         
         .rank { color: var(--blue); font-size: 0.75em; margin-left: 3px; font-weight: bold; }
+        .time-cell { white-space: nowrap; }
         .gmt-time { color: var(--blue); font-weight: 500; }
+        .time-sep { color: #444; margin: 0 4px; }
         .local-time { color: var(--green); font-weight: bold; }
         
-        .status-pending { color: #8b949e; font-style: italic; opacity: 0.8; font-size: 0.85em; display: block; margin-top: 2px; }
+        .status-pending { color: #8b949e; font-style: italic; opacity: 0.8; font-size: 0.82em; display: block; margin-top: 1px; }
         .status-inactive { color: var(--danger); text-decoration: line-through; opacity: 0.5; }
 
         @media (max-width: 600px) {
             body { padding: 5px; }
             .container { padding: 12px; border-radius: 8px; }
             #gmt-clock { font-size: 2.2em; }
-            h1 { font-size: 1.2em; margin: 10px 0; }
-            td { padding: 8px 6px; font-size: 0.85em; }
+            h1 { font-size: 1.1em; margin: 8px 0; }
+            td { padding: 8px 6px; font-size: 0.82em; }
             th { padding: 8px 6px; font-size: 0.65em; }
-            th:nth-child(2), td:nth-child(2) { display: none; } 
-            .filter-btn { padding: 6px 10px; font-size: 0.75em; }
-            .rank-legend { font-size: 0.65em; padding: 4px 8px; }
+            .filter-btn { padding: 6px 10px; font-size: 0.72em; }
+            .rank-legend { font-size: 0.62em; padding: 4px 8px; }
+            .time-sep { margin: 0 2px; }
         }
     </style>
 </head>
@@ -93,46 +95,45 @@
         <thead>
             <tr>
                 <th>Member (Rank)</th>
-                <th>Server (GMT)</th>
-                <th>Your Local Time</th>
+                <th>Shift (GMT | Local)</th>
             </tr>
         </thead>
         <tbody id="rosterBody">
-            <tr class="member-row" data-group="1"><td>AnimaExodus <span class="rank">(PR)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>David2804 <span class="rank">(CO)</span> <span class="status-pending">(Group 1 if bridge is open fast, Group 3 otherwise)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>Deepsea <span class="rank">(CO)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>FreestyleBlade <span class="rank">(CO)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>HanibalCanibal9 <span class="rank">(PR)</span> <span class="status-pending">(first hour, or Group 3)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>macpac3000 <span class="rank">(CO)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>Montserrat <span class="rank">(CO)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>todotom <span class="rank">(PR)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>>>toucansam</td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>wojtek <span class="status-pending">(GMT+1 - Group 1?)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
-            <tr class="member-row" data-group="1"><td>YALDABAOFF <span class="rank">(CO)</span></td><td class="gmt-time">07:00 - 11:00</td><td class="local-time" data-start="7" data-end="11"></td></tr>
+            <tr class="member-row" data-group="1"><td>AnimaExodus <span class="rank">(PR)</span></td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
+            <tr class="member-row" data-group="1"><td>David2804 <span class="rank">(CO)</span><span class="status-pending">(if bridge is open fast, Group 3 otherwise)</span></td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
+            <tr class="member-row" data-group="1"><td>Deepsea <span class="rank">(CO)</span></td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
+            <tr class="member-row" data-group="1"><td>FreestyleBlade <span class="rank">(CO)</span></td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
+            <tr class="member-row" data-group="1"><td>HanibalCanibal9 <span class="rank">(PR)</span><span class="status-pending">(first hour, or Group 3)</span></td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
+            <tr class="member-row" data-group="1"><td>macpac3000 <span class="rank">(CO)</span></td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
+            <tr class="member-row" data-group="1"><td>Montserrat <span class="rank">(CO)</span></td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
+            <tr class="member-row" data-group="1"><td>todotom <span class="rank">(PR)</span></td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
+            <tr class="member-row" data-group="1"><td>>>toucansam</td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
+            <tr class="member-row" data-group="1"><td>wojtek <span class="status-pending">(GMT+1 - Group 1?)</span></td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
+            <tr class="member-row" data-group="1"><td>YALDABAOFF <span class="rank">(CO)</span></td><td class="time-cell"><span class="gmt-time">07-11</span><span class="time-sep">|</span><span class="local-time" data-start="7" data-end="11"></span></td></tr>
 
-            <tr class="member-row" data-group="2"><td>Aerodeous <span class="rank">(PR)</span></td><td class="gmt-time">11:00 - 15:00</td><td class="local-time" data-start="11" data-end="15"></td></tr>
-            <tr class="member-row" data-group="2"><td>Gull <span class="rank">(PR)</span></td><td class="gmt-time">11:00 - 15:00</td><td class="local-time" data-start="11" data-end="15"></td></tr>
-            <tr class="member-row" data-group="2"><td>Ms. zombifyre <span class="rank">(PR)</span></td><td class="gmt-time">11:00 - 15:00</td><td class="local-time" data-start="11" data-end="15"></td></tr>
-            <tr class="member-row" data-group="2"><td>SQUALLZK6 <span class="rank">(CO)</span></td><td class="gmt-time">11:00 - 15:00</td><td class="local-time" data-start="11" data-end="15"></td></tr>
+            <tr class="member-row" data-group="2"><td>Aerodeous <span class="rank">(PR)</span></td><td class="time-cell"><span class="gmt-time">11-15</span><span class="time-sep">|</span><span class="local-time" data-start="11" data-end="15"></span></td></tr>
+            <tr class="member-row" data-group="2"><td>Gull <span class="rank">(PR)</span></td><td class="time-cell"><span class="gmt-time">11-15</span><span class="time-sep">|</span><span class="local-time" data-start="11" data-end="15"></span></td></tr>
+            <tr class="member-row" data-group="2"><td>Ms. zombifyre <span class="rank">(PR)</span></td><td class="time-cell"><span class="gmt-time">11-15</span><span class="time-sep">|</span><span class="local-time" data-start="11" data-end="15"></span></td></tr>
+            <tr class="member-row" data-group="2"><td>SQUALLZK6 <span class="rank">(CO)</span></td><td class="time-cell"><span class="gmt-time">11-15</span><span class="time-sep">|</span><span class="local-time" data-start="11" data-end="15"></span></td></tr>
 
-            <tr class="member-row" data-group="3"><td>David2804 <span class="rank">(CO)</span> <span class="status-pending">(If bridge is open fast, Group 3 otherwise)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3"><td>Ducage <span class="rank">(BK)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3"><td>Gozzaiz <span class="rank">(CO)</span> <span class="status-pending">(semi-inactive - Group 3?)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3"><td>GreenArcher17 <span class="rank">(PR)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3"><td>HanibalCanibal9 <span class="rank">(PR)</span> <span class="status-pending">(first hour, or Group 3)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3"><td>joscuefer <span class="rank">(CO)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3"><td>MayDay</td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3"><td>samuelbyrock <span class="rank">(CO)</span> <span class="status-pending">(Group 3?)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
-            <tr class="member-row" data-group="3"><td>simasp <span class="rank">(CO)</span></td><td class="gmt-time">15:00 - 20:00</td><td class="local-time" data-start="15" data-end="20"></td></tr>
+            <tr class="member-row" data-group="3"><td>David2804 <span class="rank">(CO)</span><span class="status-pending">(if bridge is open fast, Group 3 otherwise)</span></td><td class="time-cell"><span class="gmt-time">15-20</span><span class="time-sep">|</span><span class="local-time" data-start="15" data-end="20"></span></td></tr>
+            <tr class="member-row" data-group="3"><td>Ducage <span class="rank">(BK)</span></td><td class="time-cell"><span class="gmt-time">15-20</span><span class="time-sep">|</span><span class="local-time" data-start="15" data-end="20"></span></td></tr>
+            <tr class="member-row" data-group="3"><td>Gozzaiz <span class="rank">(CO)</span><span class="status-pending">(semi-inactive - Group 3?)</span></td><td class="time-cell"><span class="gmt-time">15-20</span><span class="time-sep">|</span><span class="local-time" data-start="15" data-end="20"></span></td></tr>
+            <tr class="member-row" data-group="3"><td>GreenArcher17 <span class="rank">(PR)</span></td><td class="time-cell"><span class="gmt-time">15-20</span><span class="time-sep">|</span><span class="local-time" data-start="15" data-end="20"></span></td></tr>
+            <tr class="member-row" data-group="3"><td>HanibalCanibal9 <span class="rank">(PR)</span><span class="status-pending">(first hour, or Group 3)</span></td><td class="time-cell"><span class="gmt-time">15-20</span><span class="time-sep">|</span><span class="local-time" data-start="15" data-end="20"></span></td></tr>
+            <tr class="member-row" data-group="3"><td>joscuefer <span class="rank">(CO)</span></td><td class="time-cell"><span class="gmt-time">15-20</span><span class="time-sep">|</span><span class="local-time" data-start="15" data-end="20"></span></td></tr>
+            <tr class="member-row" data-group="3"><td>MayDay</td><td class="time-cell"><span class="gmt-time">15-20</span><span class="time-sep">|</span><span class="local-time" data-start="15" data-end="20"></span></td></tr>
+            <tr class="member-row" data-group="3"><td>samuelbyrock <span class="rank">(CO)</span><span class="status-pending">(Group 3?)</span></td><td class="time-cell"><span class="gmt-time">15-20</span><span class="time-sep">|</span><span class="local-time" data-start="15" data-end="20"></span></td></tr>
+            <tr class="member-row" data-group="3"><td>simasp <span class="rank">(CO)</span></td><td class="time-cell"><span class="gmt-time">15-20</span><span class="time-sep">|</span><span class="local-time" data-start="15" data-end="20"></span></td></tr>
 
-            <tr class="member-row" data-group="pending"><td>BlackPanda9787 <span class="status-pending">(Asked)</span></td><td>--</td><td>TBD</td></tr>
-            <tr class="member-row" data-group="pending"><td>Djaysonking <span class="status-pending">(Asked)</span></td><td>--</td><td>TBD</td></tr>
-            <tr class="member-row" data-group="pending"><td>Homerorubio511 <span class="status-pending">(GMT-6 - Asked)</span></td><td>--</td><td>TBD</td></tr>
-            <tr class="member-row" data-group="pending"><td>Leviyeti <span class="status-pending">(Asked)</span></td><td>--</td><td>TBD</td></tr>
-            <tr class="member-row" data-group="pending"><td>mikalor <span class="status-pending">(GMT+2 - Asked)</span></td><td>--</td><td>TBD</td></tr>
-            <tr class="member-row" data-group="pending"><td>プレイイヤー <span class="status-pending">(Asked)</span></td><td>--</td><td>TBD</td></tr>
-            <tr class="member-row" data-group="pending"><td>Espana <span class="status-inactive">(Inactive)</span></td><td>--</td><td>--</td></tr>
-            <tr class="member-row" data-group="pending"><td>TDO <span class="rank">(PR)</span> <span class="status-inactive">(Inactive)</span></td><td>--</td><td>--</td></tr>
+            <tr class="member-row" data-group="pending"><td>BlackPanda9787 <span class="status-pending">(Asked)</span></td><td>--</td></tr>
+            <tr class="member-row" data-group="pending"><td>Djaysonking <span class="status-pending">(Asked)</span></td><td>--</td></tr>
+            <tr class="member-row" data-group="pending"><td>Homerorubio511 <span class="status-pending">(GMT-6 - Asked)</span></td><td>--</td></tr>
+            <tr class="member-row" data-group="pending"><td>Leviyeti <span class="status-pending">(Asked)</span></td><td>--</td></tr>
+            <tr class="member-row" data-group="pending"><td>mikalor <span class="status-pending">(GMT+2 - Asked)</span></td><td>--</td></tr>
+            <tr class="member-row" data-group="pending"><td>プレイイヤー <span class="status-pending">(Asked)</span></td><td>--</td></tr>
+            <tr class="member-row" data-group="pending"><td>Espana <span class="status-inactive">(Inactive)</span></td><td>--</td></tr>
+            <tr class="member-row" data-group="pending"><td>TDO <span class="rank">(PR)</span><span class="status-inactive">(Inactive)</span></td><td>--</td></tr>
         </tbody>
     </table>
 </div>
@@ -158,7 +159,7 @@
             const end = new Date(); end.setUTCHours(endHour, 0, 0, 0);
 
             const options = { hour: '2-digit', minute: '2-digit', hour12: false };
-            cell.innerText = `${start.toLocaleTimeString([], options)} - ${end.toLocaleTimeString([], options)}`;
+            cell.innerText = `${start.toLocaleTimeString([], options)}-${end.toLocaleTimeString([], options)}`;
         });
     }
 
@@ -182,4 +183,3 @@
 
 </body>
 </html>
- 
