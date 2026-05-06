@@ -19,32 +19,29 @@
             padding: 15px; border-radius: 12px; border: 1px solid #30363d; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
         }
-        .header { text-align: center; margin-bottom: 10px; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
+        .header { text-align: center; margin-bottom: 5px; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
         
-        /* Server Clock Styling */
-        .server-label { color: var(--blue); font-weight: 800; font-size: 0.75em; letter-spacing: 2px; display: block; margin-bottom: 2px; }
-        #gmt-clock { font-size: 2.8em; font-weight: 800; color: white; line-height: 1; margin-bottom: 10px; }
+        h1 { margin-bottom: 15px; font-size: 1.6em; color: white; letter-spacing: 1px; }
         
-        .update-tag { font-size: 0.65em; color: #8b949e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; display: block; }
+        .server-time-wrapper { margin-bottom: 15px; }
+        .server-label { color: var(--blue); font-weight: 800; font-size: 0.7em; letter-spacing: 2px; display: block; margin-bottom: 2px; }
+        #gmt-clock { font-size: 2.2em; font-weight: 800; color: white; line-height: 1; }
         
-        /* Local Time Section (Back to Clean Style) */
-        .local-info-section { margin: 15px 0; }
+        .local-info-section { margin-top: 10px; }
         .local-label { color: var(--green); font-weight: bold; font-size: 0.85em; display: block; margin-bottom: 2px; }
         #local-clock-display { color: white; font-size: 1.1em; font-weight: 600; display: block; margin-bottom: 5px; }
         
         .small-toggle { 
             background: none; border: 1px solid #30363d; color: var(--warning); 
             font-size: 0.75em; padding: 3px 10px; border-radius: 4px; cursor: pointer;
-            transition: 0.2s;
         }
-        .small-toggle:hover { background: #30363d; }
 
+        .rank-legend-container { text-align: center; margin-bottom: 10px; }
         .rank-legend { 
-            font-size: 0.7em; color: #8b949e; margin-bottom: 15px;
-            background: #21262d; padding: 5px 10px; border-radius: 6px; 
+            font-size: 0.7em; color: #8b949e; 
+            background: #0d1117; padding: 5px 12px; border-radius: 6px; 
             display: inline-block; border: 1px solid #30363d;
         }
-        .legend-tag { color: var(--blue); font-weight: bold; }
 
         .filters { display: flex; gap: 5px; margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
         .filter-btn { 
@@ -80,8 +77,8 @@
         .status-inactive { color: var(--danger); text-decoration: line-through; opacity: 0.5; }
 
         @media (max-width: 600px) {
-            #gmt-clock { font-size: 2.2em; }
-            h1 { font-size: 1.2em; margin-bottom: 10px; }
+            h1 { font-size: 1.3em; }
+            #gmt-clock { font-size: 1.8em; }
             td { padding: 8px 5px; font-size: 0.82em; }
         }
     </style>
@@ -90,22 +87,16 @@
 
 <div class="container">
     <div class="header">
-        <span class="update-tag">Last Updated: May 7th, 2026</span>
+        <h1>⚔️ Bad Chads - War Room</h1>
         
         <div class="server-time-wrapper">
             <span class="server-label">SERVER TIME</span>
             <div id="gmt-clock">00:00:00 GMT</div>
         </div>
 
-        <h1>⚔️ Bad Chads - War Room ⚔️</h1>
-        
-        <div class="rank-legend">
-            <span class="legend-tag">BK:</span> Bad King | <span class="legend-tag">PR:</span> Bad Prince | <span class="legend-tag">CO:</span> Bad Commander
-        </div>
-
         <div class="local-info-section">
             <span class="local-label">Your Local Time:</span>
-            <span id="local-clock-display">Loading Local Time...</span>
+            <span id="local-clock-display">Loading...</span>
             <button class="small-toggle" onclick="toggle1224()">Switch Format (12/24H)</button>
         </div>
     </div>
@@ -116,6 +107,12 @@
         <button class="filter-btn" onclick="filterGroup('2', this)">Group 2</button>
         <button class="filter-btn" onclick="filterGroup('3', this)">Group 3</button>
         <button class="filter-btn" onclick="filterGroup('pending', this)">Pending</button>
+    </div>
+
+    <div class="rank-legend-container">
+        <div class="rank-legend">
+            BK: Bad King | PR: Bad Prince | CO: Bad Commander
+        </div>
     </div>
 
     <div class="table-header-row">
@@ -174,11 +171,7 @@
     function updateClocks() {
         const now = new Date();
         const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: !use24Hour };
-        
-        // GMT Server Clock
         document.getElementById('gmt-clock').innerText = now.toLocaleTimeString('en-GB', {...options, timeZone: 'UTC'}).toUpperCase() + ' GMT';
-        
-        // Local Clock
         const offset = -now.getTimezoneOffset() / 60;
         const sign = offset >= 0 ? "+" : "";
         document.getElementById('local-clock-display').innerText = now.toLocaleTimeString([], options) + ` (GMT${sign}${offset})`;
@@ -200,12 +193,10 @@
     function renderTimes() {
         const cells = document.querySelectorAll('.time-display');
         const options = { hour: '2-digit', minute: '2-digit', hour12: !use24Hour };
-
         cells.forEach(cell => {
             const start = cell.getAttribute('data-start');
             const end = cell.getAttribute('data-end');
             if (!start) return;
-
             if (currentView === 'server') {
                 const sStart = new Date(); sStart.setUTCHours(start, 0, 0, 0);
                 const sEnd = new Date(); sEnd.setUTCHours(end, 0, 0, 0);
@@ -243,4 +234,3 @@
 
 </body>
 </html>
- 
